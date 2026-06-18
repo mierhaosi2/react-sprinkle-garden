@@ -57,18 +57,19 @@ const AsciiPlant = ({ plant, onWater }) => {
       <div className="plant-text-area">
         {/* 空白占位，让植物贴底对齐 */}
         <div className="plant-lines">
-          <AnimatePresence>
-            {lines.map((line, i) => {
-              // i=0 是最顶部的行，lines.length-1 是地面
-              // 新生长出来的行在顶部，用 key 追踪
-              const isNewest = i === 0 && plant.stage > 0
+          <AnimatePresence initial={false}>
+            {lines.map((line) => {
+              // key 用行内容本身（PLANT_LINES 中每行都唯一）
+              // 这样已有的行 key 不变 → 不会闪动，只有新行才触发入场动画
+              const lineIndex = PLANT_LINES.indexOf(line)
+              const isNewest = lineIndex === PLANT_LINES.length - plant.stage
               return (
                 <motion.div
-                  key={`stage-${plant.stage}-line-${i}`}
+                  key={line}
                   className="plant-line"
-                  initial={isNewest ? { opacity: 0, x: -4 } : { opacity: 1, x: 0 }}
+                  initial={isNewest ? { opacity: 0, x: -6 } : false}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.25, delay: isNewest ? 0.05 : 0 }}
+                  transition={{ duration: 0.22 }}
                 >
                   {line}
                 </motion.div>
