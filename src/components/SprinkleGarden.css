@@ -1,0 +1,236 @@
+@import url('https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400;700&display=swap');
+
+/* ===== 主容器 ===== */
+.sprinkle-garden {
+  position: relative;
+  width: 100%;
+  background: #0e0e14;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: crosshair;
+  user-select: none;
+  font-family: 'Kode Mono', 'Courier New', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 14px;
+  box-shadow:
+    0 0 0 1px rgba(253, 107, 148, 0.15),
+    0 20px 60px rgba(0, 0, 0, 0.6),
+    0 0 80px rgba(253, 107, 148, 0.04);
+}
+
+/* ===== 顶部标题栏 ===== */
+.garden-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 18px;
+  border-bottom: 1px solid rgba(253, 107, 148, 0.12);
+  background: rgba(253, 107, 148, 0.03);
+
+  .header-tag {
+    color: rgba(253, 107, 148, 0.45);
+    font-size: 11px;
+  }
+
+  .header-status {
+    color: rgba(253, 107, 148, 0.5);
+    font-size: 11px;
+  }
+}
+
+/* ===== 天空区域 ===== */
+.garden-sky {
+  position: relative;
+  min-height: 160px;
+  padding: 32px 28px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.sky-text {
+  position: relative;
+  z-index: 2;
+}
+
+.sky-line {
+  margin: 0;
+  padding: 0;
+  color: rgb(253, 107, 148);
+  line-height: 18px;
+
+  &.comment {
+    color: rgba(253, 107, 148, 0.38);
+    font-size: 11px;
+  }
+
+  &.quote {
+    color: rgba(253, 107, 148, 0.7);
+    font-size: 11px;
+    margin-top: 12px;
+    letter-spacing: 0.02em;
+  }
+}
+
+/* ===== ASCII 云朵 ===== */
+.ascii-clouds {
+  position: absolute;
+  top: 14px;
+  right: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+.ascii-cloud {
+  color: rgb(253, 107, 148);
+  font-size: 11px;
+  display: block;
+
+  &.cloud-2 {
+    font-size: 10px;
+    padding-left: 12px;
+  }
+}
+
+/* ===== 植物行 ===== */
+.plants-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 20px;
+  padding: 0 24px;
+  flex-wrap: wrap;
+}
+
+/* ===== 单株植物 ===== */
+.ascii-plant {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  padding: 8px 6px 4px;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: rgba(253, 107, 148, 0.06);
+  }
+
+  &.fully-grown {
+    .plant-line {
+      color: rgb(253, 107, 148);
+      text-shadow: 0 0 8px rgba(253, 107, 148, 0.5);
+    }
+  }
+}
+
+/* 植物文字区域（固定高度，植物贴底） */
+.plant-text-area {
+  height: calc(14px * 7 + 4px); /* 7行 × 行高 + 余量 */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-width: 40px;
+}
+
+.plant-lines {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.plant-line {
+  color: rgb(253, 107, 148);
+  display: block;
+  text-align: center;
+  white-space: pre;
+  line-height: 14px;
+  letter-spacing: 0.02em;
+
+  &.seed {
+    color: rgba(253, 107, 148, 0.4);
+  }
+}
+
+/* ===== 进度条 ===== */
+.plant-progress {
+  margin-top: 6px;
+  font-size: 9px;
+  color: rgba(253, 107, 148, 0.45);
+  line-height: 12px;
+  letter-spacing: 0;
+
+  .filled {
+    color: rgba(253, 107, 148, 0.75);
+  }
+
+  .empty {
+    color: rgba(253, 107, 148, 0.2);
+  }
+}
+
+/* ===== 地面层 ===== */
+.garden-floor {
+  margin-top: 12px;
+}
+
+.floor-grass {
+  color: rgba(253, 107, 148, 0.5);
+  font-size: 11px;
+  line-height: 13px;
+  padding: 0 8px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.floor-soil {
+  color: rgba(253, 107, 148, 0.12);
+  font-size: 11px;
+  line-height: 12px;
+  padding: 0 8px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* ===== 底部引言 ===== */
+.garden-footer {
+  padding: 12px 18px;
+  border-top: 1px solid rgba(253, 107, 148, 0.1);
+  text-align: right;
+  color: rgba(253, 107, 148, 0.3);
+  font-size: 11px;
+}
+
+/* ===== ASCII 水滴（fixed 全局定位） ===== */
+.ascii-drop {
+  position: fixed;
+  color: rgb(120, 200, 255);
+  font-family: 'Kode Mono', 'Courier New', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  pointer-events: none;
+  z-index: 9999;
+  text-shadow: 0 0 4px rgba(120, 200, 255, 0.7);
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 640px) {
+  .garden-sky {
+    padding: 24px 18px 16px;
+    min-height: 120px;
+  }
+
+  .plants-row {
+    gap: 12px;
+    padding: 0 14px;
+  }
+
+  .ascii-clouds {
+    display: none;
+  }
+}
