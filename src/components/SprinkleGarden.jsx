@@ -59,13 +59,12 @@ const AsciiPlant = ({ plant, onWater }) => {
         <div className="plant-lines">
           <AnimatePresence initial={false}>
             {lines.map((line) => {
-              // key 用行内容本身（PLANT_LINES 中每行都唯一）
-              // 这样已有的行 key 不变 → 不会闪动，只有新行才触发入场动画
+              // lineIndex 是该行在 PLANT_LINES 里的固定位置
               const lineIndex = PLANT_LINES.indexOf(line)
               const isNewest = lineIndex === PLANT_LINES.length - plant.stage
               return (
                 <motion.div
-                  key={line}
+                  key={lineIndex}
                   className="plant-line"
                   initial={isNewest ? { opacity: 0, x: -6 } : false}
                   animate={{ opacity: 1, x: 0 }}
