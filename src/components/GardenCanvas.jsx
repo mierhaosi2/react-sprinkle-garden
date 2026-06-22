@@ -180,15 +180,40 @@ const GRASS_SEQ = [
 // tick 每 200ms +1，每根草每 5 tick（≈1s）换一帧
 // phase 错开各自触发时机：phase*3 使相邻草之间相差 600ms
 const TICKS_PER_FRAME = 5
-const grassBlades = Array.from({ length: 15 }, (_, i) => ({
-  id: i,
-  x: 1.2 + (i / 15) * 97,
-  y: 3 + (i * 7.3 + i * i * 0.4) % 50,
-  seq: GRASS_SEQ[i % GRASS_SEQ.length],
-  phase: i * 3,  // 相邻草错开 3 tick = 600ms
-}))
+// 草生成时传入植物列表，避免与花重叠
+const generateGrass = (plants, count = 15) => {
+  const GRASS_MIN_DIST = 6  // 距任何植物的最小距离（%单位）
+  const blades = []
+  let attempts = 0
+  while (blades.length < count && attempts < count * 40) {
+    attempts++
+    const x = Math.random() * 96 + 2
+    const y = Math.random() * 52 + 3
+    const tooClose =
+      plants.some(p => {
+        const dx = p.x - x
+        const dy = (p.y - y) * 1.5
+        return Math.sqrt(dx * dx + dy * dy) < GRASS_MIN_DIST
+      }) ||
+      blades.some(b => {
+        const dx = b.x - x
+        const dy = b.y - y
+        return Math.abs(dx) < 4 && Math.abs(dy) < 4
+      })
+    if (!tooClose) {
+      blades.push({
+        id: blades.length,
+        x,
+        y,
+        seq: GRASS_SEQ[blades.length % GRASS_SEQ.length],
+        phase: blades.length * 3,
+      })
+    }
+  }
+  return blades
+}
 
-const SwayingGrass = memo(() => {
+const SwayingGrass = memo(({ blades }) => {
   const [tick, setTick] = useState(0)
 
   useEffect(() => {
@@ -198,7 +223,7 @@ const SwayingGrass = memo(() => {
 
   return (
     <>
-      {grassBlades.map(b => (
+      {blades.map(b => (
         <span
           key={b.id}
           className="sway-grass"
@@ -277,6 +302,7 @@ const GardenPlant = memo(({ plant, onWater }) => {
 // ─── 主画布组件 ─────────────────────────────────────────────
 export const GardenCanvas = () => {
   const [plants, setPlants] = useState(() => generatePlants(30))
+  const [grass] = useState(() => generateGrass(plants))
   const [drops, setDrops] = useState([])
   const [isPouring, setIsPouring] = useState(false)
 
@@ -395,17 +421,7 @@ export const GardenCanvas = () => {
       ))}
 
       {/* 摇曳小草 */}
-      <SwayingGrass />
-
-      {/* 地面线 */}
-      <div className="canvas-ground">
-        {'~^~^~^^~^~~^~~^^~^~^~^^~^~~^~~^^~^~^~^^~^~~^~~^^~^~^~^^~^~~^~~^^~^~^~^^~^~~^~~^^~^~'}
-      </div>
-
-      {/* 引言 */}
-      <div className="canvas-quote">
-        "to plant a garden, is to believe in the future."
-      </div>
+      <SwayingGrass blades={grass} />
 
       {/* 水壶 cursor（自管理鼠标位置，不触发父组件重渲染）*/}
       <WateringCanCursor canvasRef={canvasRef} isPouring={isPouring} />

@@ -56,7 +56,9 @@
   position: absolute;
   cursor: none;
   z-index: 3;
-  /* translateX(-50%) 由 framer-motion style.x 控制，避免 transform 冲突 */
+  /* 扩大热区，让点击更容易触发 */
+  padding: 10px 16px;
+  margin: -10px -16px;
 }
 
 .gp-lines {
