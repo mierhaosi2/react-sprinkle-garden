@@ -1,14 +1,7 @@
-.app-layout {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px;
-  background: #07070d;
-  box-sizing: border-box;
-}
-
-.app-layout .sprinkle-garden {
+body, #root {
+  margin: 0;
+  padding: 0;
   width: 100%;
-  max-width: 680px;
+  height: 100vh;
+  overflow: hidden;
 }

@@ -1,12 +1,8 @@
-import { SprinkleGarden } from './components/SprinkleGarden'
+import { GardenCanvas } from './components/GardenCanvas'
 import './App.css'
 
 function App() {
-  return (
-    <main className="app-layout">
-      <SprinkleGarden />
-    </main>
-  )
+  return <GardenCanvas />
 }
 
 export default App
